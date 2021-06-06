@@ -1,0 +1,44 @@
+* {
+	font-family: sans-serif;
+}
+body {
+	background: #282828;
+	padding: 2em;
+	height: 100vh;
+}
+
+.login {
+	background: #06090a;
+	color: white;
+	display: grid;
+	padding: 1em;
+	justify-content: center;
+	align-content: center;
+	height: 100vh;
+}
+
+.head-intro {
+	background: #b62f31;
+	margin: 10px 0;
+	display: grid;
+	justify-content: center;
+}
+
+.form {
+	display: grid;
+}
+
+.field-name {
+	margin-top: 1em;
+}
+
+.field-input {
+	width: 100px;
+}
+
+#submit-button {
+	background: #0cd864;
+	border: none;
+	margin-top: 1em;
+	padding: 1.2em;
+}
