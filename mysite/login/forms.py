@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Accounts
-
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -10,7 +8,7 @@ class UserRegistrationForm(forms.ModelForm):
                                 widget=forms.PasswordInput)
 
     class Meta:
-        model = Accounts
+        model = User
         fields = ('username', 'email')
 
     def clean_password2(self):
@@ -23,4 +21,8 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class UserLoginForm(forms.Form):
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
     pass
