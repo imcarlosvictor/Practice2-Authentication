@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 from .forms import UserRegistrationForm
 
@@ -14,15 +15,23 @@ def create_account(request):
             # Create an account but don't save
             new_user = user_form.save(commit=False)
             # Save the password to the new user
-            new_user.set_password(user_form.cleaned_data['password2'])
+            new_user.set_password(user_form.cleaned_data['password'])
             # Save the account
             new_user.save()
-            return render(request, 'login/login_done.html',
+            return render(request, 'login/dashboard.html',
                           {'new_user': new_user})
+        # else:
+        #     # User exits.
+        #     if user_form.cleaned_data['username']:
+        #         return HttpResponse('Username already exists')
     else:
         user_form = UserRegistrationForm()
     return render(request, 'login/login.html', {'user_form': user_form})
 
 
 def user_login(request):
+    pass
+
+
+def dashboard(request):
     pass

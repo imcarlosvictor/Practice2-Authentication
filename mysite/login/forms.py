@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from .models import Accounts
+
 
 class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -8,8 +10,8 @@ class UserRegistrationForm(forms.ModelForm):
                                 widget=forms.PasswordInput)
 
     class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        model = Accounts
+        fields = ('username', 'email')
 
     def clean_password2(self):
         """Validates if both passwords match."""
@@ -18,3 +20,7 @@ class UserRegistrationForm(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
+
+
+class UserLoginForm(forms.Form):
+    pass

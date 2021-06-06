@@ -18,7 +18,6 @@ body {
 }
 
 .head-intro {
-	background: #b62f31;
 	margin: 10px 0;
 	display: grid;
 	justify-content: center;
@@ -39,6 +38,6 @@ body {
 #submit-button {
 	background: #0cd864;
 	border: none;
-	margin-top: 1em;
+	margin-top: 2em;
 	padding: 1.2em;
 }
