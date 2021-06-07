@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login
 
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, UserLoginForm
 
 
 # Create your views here.
@@ -26,12 +27,29 @@ def create_account(request):
         #         return HttpResponse('Username already exists')
     else:
         user_form = UserRegistrationForm()
-    return render(request, 'login/login.html', {'user_form': user_form})
+    return render(request, 'signup/login.html', {'user_form': user_form})
 
 
 def user_login(request):
-    pass
+    if request.method == 'POST':
+        login_form = UserLoginForm(request.POST)
+        if login_form.is_valid():
+            # Save info
+            cd = login_form.cleaned_data
+            # Authenticate user with saved data
+            user = authenticate(request,
+                                username=cd['username'],
+                                password=cd['password'])
+            if user is not None:
+                # Backend credential authentication successful
+                pass
+            else:
+                # Backend credential authentication unsuccessful
+                pass
+    else:
+        login_form = UserLoginForm()
+    return render(request, 'login/login.html', {'login_form': login_form})
 
 
 def dashboard(request):
-    pass
+    return render(request, 'login/dashboard.html')

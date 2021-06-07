@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+	<div class="login">
+		<div class="head-intro">
+			<h1>Sign Up</h1>
+		</div>
+		<div class="form">
+			<form method="POST" action="">
+				{% csrf_token %}
+
+				<div class="field-name">{{ user_form.username.label }}</div>
+				<div class="field-input"> {{ user_form.username }}</div>
+
+				<div class="field-name">{{ user_form.email.label }}</div>
+				<div class="field-input">{{ user_form.email }}</div>
+
+				<div class="field-name">{{ user_form.password.label }}</div>
+				<div class="field-input">{{ user_form.password }}</div>
+
+				<div class="field-name">{{ user_form.password2.label }}</div>
+				<div class="field-input">{{ user_form.password2 }}</div>
+				<div id="submit-btn"><input id="submit-button" type="submit" value="Register"></div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
