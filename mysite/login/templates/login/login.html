@@ -16,7 +16,13 @@
 
 		<div class="field-name">{{ login_form.password.label }}</div>
 		<div class="field-input">{{ login_form.password }}</div>
+
+		<div id="submit-btn"><input type="submit" value="Login"></div>
 	</form>
+
+	{% for message in messages %}
+	<p id="messages">{{ message }}</p>
+	{% endfor %}
 	</div>
 </div>
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 
 from .forms import UserRegistrationForm, UserLoginForm
@@ -21,16 +22,15 @@ def create_account(request):
             new_user.save()
             return render(request, 'login/dashboard.html',
                           {'new_user': new_user})
-        # else:
-        #     # User exits.
-        #     if user_form.cleaned_data['username']:
-        #         return HttpResponse('Username already exists')
+        else:
+            messages.error(request, 'Invalid account')
     else:
         user_form = UserRegistrationForm()
-    return render(request, 'signup/login.html', {'user_form': user_form})
+    return render(request, 'login/signup.html', {'user_form': user_form})
 
 
 def user_login(request):
+
     if request.method == 'POST':
         login_form = UserLoginForm(request.POST)
         if login_form.is_valid():
@@ -42,10 +42,14 @@ def user_login(request):
                                 password=cd['password'])
             if user is not None:
                 # Backend credential authentication successful
-                pass
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponse('Authenticated successfully')
+                else:
+                    return HttpResponse('Disabled account')
             else:
-                # Backend credential authentication unsuccessful
-                pass
+                # Backend credential authentication successful
+                messages.info(request, 'Wrong credentials')
     else:
         login_form = UserLoginForm()
     return render(request, 'login/login.html', {'login_form': login_form})
