@@ -20,6 +20,10 @@
 		<div id="submit-btn"><input type="submit" value="Login"></div>
 	</form>
 
+	<a href="{% url 'password_reset' %}">Reset password</a>
+
+	<a href="{% url 'register' %}">Create Account</a>
+
 	{% for message in messages %}
 	<p id="messages">{{ message }}</p>
 	{% endfor %}

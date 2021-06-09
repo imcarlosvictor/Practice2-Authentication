@@ -1,6 +1,7 @@
 * {
 	font-family: sans-serif;
 }
+
 body {
 	background: #282828;
 	padding: 2em;
@@ -15,6 +16,11 @@ body {
 	justify-content: center;
 	align-content: center;
 	height: 100vh;
+}
+
+.nav {
+	background: red;
+	
 }
 
 .head-intro {
@@ -35,9 +41,9 @@ body {
 	width: 100px;
 }
 
-#submit-button {
+#submit-btn {
 	background: #0cd864;
 	border: none;
 	margin-top: 2em;
-	padding: 1.2em;
+	padding: 1em;
 }

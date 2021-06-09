@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 from .forms import UserRegistrationForm, UserLoginForm
 
 
 # Create your views here.
-def create_account(request):
+def register(request):
     """Creates an account for the user or redirects them to the login page."""
 
     if request.method == 'POST':
@@ -26,15 +27,18 @@ def create_account(request):
             messages.error(request, 'Invalid account')
     else:
         user_form = UserRegistrationForm()
-    return render(request, 'login/signup.html', {'user_form': user_form})
+    return render(request, 'registration/signup.html',
+                  {'user_form': user_form})
 
 
-def user_login(request):
+def login_request(request):
+    """Authenticates User login"""
 
     if request.method == 'POST':
         login_form = UserLoginForm(request.POST)
+        # Validate form
         if login_form.is_valid():
-            # Save info
+            # Clean data
             cd = login_form.cleaned_data
             # Authenticate user with saved data
             user = authenticate(request,
@@ -43,17 +47,29 @@ def user_login(request):
             if user is not None:
                 # Backend credential authentication successful
                 if user.is_active:
+                    # Login user
                     login(request, user)
-                    return HttpResponse('Authenticated successfully')
+                    # Display message
+                    messages.success(request, 'Login successful')
+                    return render(request, 'login/dashboard.html')
                 else:
-                    return HttpResponse('Disabled account')
+                    messages.error(request, 'Disabled account')
             else:
                 # Backend credential authentication successful
-                messages.info(request, 'Wrong credentials')
+                messages.info(request, 'Login unsuccessful')
     else:
         login_form = UserLoginForm()
     return render(request, 'login/login.html', {'login_form': login_form})
 
 
+def logout_request(request):
+    """Logs out user and redirects to login page."""
+
+    logout(request)
+    messages.info(request, 'Logout successful')
+    return redirect('login:login')
+
+
+@login_required
 def dashboard(request):
     return render(request, 'login/dashboard.html')
